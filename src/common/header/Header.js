@@ -338,7 +338,7 @@ export default function Header(props) {
               color="primary"
               onClick={loginClickHandler}
             >
-              Login{" "}
+              Login
             </Button>
           </div>
         </form>
@@ -471,7 +471,6 @@ export default function Header(props) {
 
         {!loggedin && props.showBookShowButton === "true" ? (
           <div className="book-button">
-            {" "}
             <Button
               variant="contained"
               type="button"
@@ -489,7 +488,6 @@ export default function Header(props) {
         {loggedin && props.showBookShowButton === "true" ? (
           <Link to={"/bookshow/" + props.id}>
             <div className="book-button">
-              {" "}
               <Button
                 variant="contained"
                 type="button"
