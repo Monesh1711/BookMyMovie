@@ -116,6 +116,7 @@ export default function Header(props) {
   const [firstnameRequired, setFirstnameRequired] = React.useState("dispNone");
   const [lastnameRequired, setLastnameRequired] = React.useState("dispNone");
   const [emailRequired, setEmailRequired] = React.useState("dispNone");
+  const [invalidEmail, setInvalidEmail] = React.useState("dispNone");
   const [registerPasswordRequired, setRegisterPasswordRequired] =
     React.useState("dispNone");
   const [contactRequired, setContactRequired] = React.useState("dispNone");
@@ -229,6 +230,12 @@ export default function Header(props) {
   const registerClickHandler = async () => {
     //Handler for Registration
 
+    const regex =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email.length > 0)
+      regex.test(email)
+        ? setInvalidEmail("dispNone")
+        : setInvalidEmail("dispBlock");
     firstname === ""
       ? setFirstnameRequired("dispBlock")
       : setFirstnameRequired("dispNone");
@@ -252,7 +259,7 @@ export default function Header(props) {
     };
 
     if (
-      email !== "" &&
+      regex.test(email) &&
       firstname !== "" &&
       lastname !== "" &&
       contact !== "" &&
@@ -376,12 +383,15 @@ export default function Header(props) {
           <InputLabel htmlFor="email">Email</InputLabel>
           <Input
             id="email"
-            type="text"
+            type="email"
             email={email}
             onChange={inputEmailChangeHandler}
           />
           <FormHelperText className={emailRequired}>
             <span className="red">required</span>
+          </FormHelperText>
+          <FormHelperText className={invalidEmail}>
+            <span className="red">invalid email</span>
           </FormHelperText>
         </FormControl>
         <br />
